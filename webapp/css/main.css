@@ -25,15 +25,17 @@ body > div > div {
   width: 960px;
   margin: 10px;
 }
-.form-group {
+form .form-group {
   display:inline-block;
   float:left;
   margin-right:8px;
+  margin-bottom:1px;
 }
 .form-group.blocks {
   display:block;
   float:none;
   margin-right:8px;
+  overflow:auto;
 }
 
 form > div.last:after {
@@ -58,7 +60,9 @@ form > div.form-group > select.form-control {
   height: 744px;
   padding: 0px 0px;
 }
-body .notshown {
+
+body .notshown,
+body .form-group.blocks.notshown {
   display:none;
 }
 .results {

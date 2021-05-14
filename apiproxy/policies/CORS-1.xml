@@ -1,8 +1,8 @@
 <CORS name="CORS-1" enabled="true">
     <!--    <AllowOrigins>{request.header.origin}</AllowOrigins> -->
     <AllowOrigins>*</AllowOrigins>
-    <AllowMethods>OPTIONS, GET, PUT, POST, DELETE</AllowMethods>
-    <AllowHeaders>origin, x-requested-with</AllowHeaders>
+    <AllowMethods>GET, POST, DELETE</AllowMethods>
+    <AllowHeaders>origin, x-requested-with, content-type</AllowHeaders>
     <ExposeHeaders>*</ExposeHeaders>
     <MaxAge>180</MaxAge>
     <AllowCredentials>false</AllowCredentials>

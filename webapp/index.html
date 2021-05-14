@@ -36,18 +36,32 @@
           </div>
 
           <div class='form-group blocks'>
-            <label for='ta-headerlist'>Headers</label>
-            <textarea rows=6 cols=44 id='ta-headerlist' class='txt' spellcheck='false' class='plaintextvalue'></textarea>
+            <label for='ta-addlheaderlist'>Additional Headers</label>
+            <textarea rows=4 cols=44 id='ta-addlheaderlist' class='txt' spellcheck='false' class='plaintextvalue'></textarea>
           </div>
 
           <div class='form-group blocks'>
             <label for='sel-verb'>Verb</label>
               <select class="form-control form-control-sm sel-verb" id='sel-verb'>
-                <option value='OPTIONS'>OPTIONS</option>
                 <option value='GET'>GET</option>
                 <option value='POST'>POST</option>
+                <option value='PUT'>PUT</option>
                 <option value='DELETE'>DELETE</option>
               </select>
+          </div>
+
+          <div class='form-group blocks for-payload'>
+            <label for='sel-contenttype'>Content-Type</label>
+              <select class="form-control form-control-sm sel-contenttype" id='sel-contenttype'>
+                <option value='text/plain'>text/plain</option>
+                <option value='application/x-www-form-urlencoded'>application/x-www-form-urlencoded</option>
+                <option value='application/json'>application/json</option>
+              </select>
+          </div>
+
+          <div class='form-group blocks for-payload'>
+            <label for='ta-body'>Body</label>
+            <textarea rows=3 cols=44 id='ta-body' class='txt' spellcheck='false' class='plaintextvalue'></textarea>
           </div>
 
           <div class='form-group'>

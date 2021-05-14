@@ -12,8 +12,10 @@
   let model = {
         'txt-baseurl' : '',
         'txt-urlpath' : '',
-        'ta-headerlist' : '',
-        'sel-verb' : ''
+        'ta-addlheaderlist' : '',
+        'ta-body' : '',
+        'sel-verb' : '',
+        'sel-contenttype' : ''
       };
 
   function debounce(interval, callback) {
@@ -35,6 +37,7 @@
           if (key.startsWith('sel-')) {
             // the type of form field is select.
             $item.find("option[value='"+value+"']").prop('selected', 'selected');
+            onSelectChanged.call($item, null);
             //$item.trigger('chosen:updated');
           }
           else {
@@ -83,12 +86,24 @@
     }
   }
 
+  function httpMethodHasPayload(method) {
+    return (method == 'POST' || method == 'PUT');
+  }
+
   function onSelectChanged() {
     let $$ = $(this),
         id = $$.attr('id'),
         value = getSingleSelectItemValue($$);
     model[id] = value;
     storeItem(id, value);
+    if (id == 'sel-verb') {
+      if(httpMethodHasPayload(value)) {
+        $('.for-payload').removeClass('notshown');
+      }
+      else {
+        $('.for-payload').addClass('notshown');
+      }
+    }
   }
 
   function storeItem(key, value) {
@@ -126,25 +141,31 @@
     $('#btn-clear').parent().removeClass('notshown');
   }
 
+
   function submit(event) {
     if (event) { event.preventDefault(); }
 
     try {
-      let link = $('#txt-baseurl').val() + $('#txt-urlpath').val();
-      if (link) {
-        for (let m = extraneousDoubleSlashFinder.exec(link); m; ) {
-          link = m[1] + '/' + m[2];
+      let url = $('#txt-baseurl').val() + $('#txt-urlpath').val();
+      if (url) {
+        for (let m = extraneousDoubleSlashFinder.exec(url); m; ) {
+          url = m[1] + '/' + m[2];
         }
 
         // POST to the API endpoint.
         // If it honors CORS, then this call will go through.
         clearOutput();
-        $.ajax({
-            url: link,
-            method: getSingleSelectItemValue($('#sel-verb')),
-            headers: shredHeaders($('#ta-headerlist').val()),
-            dataType : 'text' // response
-          })
+        let method = getSingleSelectItemValue($('#sel-verb')),
+            headers = shredHeaders($('#ta-addlheaderlist').val()),
+            data = null,
+            dataType = 'text';  // response
+
+        if (httpMethodHasPayload(method)) {
+          headers['content-type'] = getSingleSelectItemValue($('#sel-contenttype'));
+          data = $('#ta-body').val();
+        }
+
+        $.ajax({ url, method, headers, data, dataType })
           .done(function(data, textStatus, jqXHR) {
             showOutput(jqXHR);
           })
@@ -159,13 +180,14 @@
     return false;
   }
 
+
   $(document).ready(function() {
     populateFormFields();
     $( '#btn-send').on('click', submit);
     $( '#btn-clear').on('click', clearOutput);
     $( 'form .txt' ).on('change keyup input', debounce(450, onInputChanged));
     $( 'form select' ).change(onSelectChanged);
-    $( '#ta_privatekey').on('paste', handlePaste);
+    $( 'form textarea').on('paste', handlePaste);
   });
 
 }());
