@@ -1,4 +1,4 @@
-<Javascript name="JS-RemoveCopiedHeaders">
+<Javascript name="JS-RemoveCopiedHeaders" enabled='true'>
   <!--
        This policy removes the request headers that Apigee
        implicitly copies to the response, on a oopback proxy.

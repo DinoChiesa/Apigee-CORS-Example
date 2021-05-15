@@ -18,10 +18,13 @@
     </Request>
     <Response>
       <Step>
-        <Name>AM-InjectProxyVersionHeader</Name>
+        <Name>AM-CleanResponseHeaders</Name>
       </Step>
       <Step>
         <Name>JS-RemoveCopiedHeaders</Name>
+      </Step>
+      <Step>
+        <Name>AM-InjectProxyVersionHeader</Name>
       </Step>
     </Response>
   </PreFlow>
